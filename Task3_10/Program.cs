@@ -23,7 +23,7 @@ namespace Task3_10
             }
             else
             {
-                if (a % 10 == 1)
+                if (a % 10 == 1 && a % 100 != 11)
                 {
                     b = "";
                 }
@@ -40,7 +40,7 @@ namespace Task3_10
                 }
             }
 
-            Console.WriteLine("Мы построили {0} дом{1}", a, b);
+            Console.WriteLine("Мы построили {0} дом{1}.", a, b);
 
             Console.WriteLine();//просто отделяю смысловые абзацы пустой строкой
             Console.WriteLine("Нажмите любую клавишу для завершения");
