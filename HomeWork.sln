@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySearch_test", "Binary
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySearch_demo", "BinarySearch_demo\BinarySearch_demo.csproj", "{AF03C98C-7C3E-4DA1-9DCC-4A7486988AC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bisearch_v2", "bisearch_v2\bisearch_v2.csproj", "{015ED2B8-AD87-46D8-849E-BFABC9401982}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySearch_demo_v2", "bisearch_v2\BinarySearch_demo_v2.csproj", "{015ED2B8-AD87-46D8-849E-BFABC9401982}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
