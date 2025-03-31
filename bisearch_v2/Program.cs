@@ -9,8 +9,8 @@
             Console.Write("Введите искомое значение: ");
             int s = Convert.ToInt32(Console.ReadLine()); //искомое значение (тестовые значения 33 11 7 15 50)
             Console.WriteLine();
-            const int n = 22;
-            int[] t = new int[n] { 16, 30, 33, 11, 12, 18, 46, 13, 45, 14, 34, 10, 46, 19, 47, 17, 30, 10, 46, 15, 47, 16 };
+            const int n = 8;
+            int[] t = new int[n] { 16, 30, 33, 11, 12, 18, 46, 13 };
             Console.WriteLine("Массив: ");
             for (int i = 0; i < n; i++)
             {
@@ -44,7 +44,7 @@
             Console.WriteLine();
             Console.WriteLine();
             //бинарный поиск
-            string answer = "test";
+            string answer = "Найден";
             int cOfM = n / 2;
             int step = n % 2 == 0 ? n / 2 : n / 2 + 1; // проверяем на четность длину массива. накидываем единицу, чтобы нивелировать "округление" при целочисленном делении
             bool f = true;
@@ -64,10 +64,6 @@
                     answer = "Не найден";
                     f = false;
                     break;
-                }
-                else
-                {
-                    answer = "Найден";
                 }
             }
             Console.WriteLine(answer);

@@ -15,11 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2_4", "Task2_4\Task2_4.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2_5", "Task2_5\Task2_5.csproj", "{1F54B5F3-8EBE-4561-8925-98BCC3F86F5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySearch_test", "BinarySearch\BinarySearch_test.csproj", "{A5B948D5-CDBA-4235-8779-C07E06734D6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySearch_demo_test", "bisearch_v2\BinarySearch_demo_test.csproj", "{015ED2B8-AD87-46D8-849E-BFABC9401982}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySearch_demo", "BinarySearch_demo\BinarySearch_demo.csproj", "{AF03C98C-7C3E-4DA1-9DCC-4A7486988AC1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySearch_demo_v2", "bisearch_v2\BinarySearch_demo_v2.csproj", "{015ED2B8-AD87-46D8-849E-BFABC9401982}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bisearch_grok", "Bisearch_grok\Bisearch_grok.csproj", "{A39599D7-3338-469D-9242-F0CD64B02716}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,18 +49,14 @@ Global
 		{1F54B5F3-8EBE-4561-8925-98BCC3F86F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F54B5F3-8EBE-4561-8925-98BCC3F86F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F54B5F3-8EBE-4561-8925-98BCC3F86F5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5B948D5-CDBA-4235-8779-C07E06734D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5B948D5-CDBA-4235-8779-C07E06734D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5B948D5-CDBA-4235-8779-C07E06734D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5B948D5-CDBA-4235-8779-C07E06734D6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF03C98C-7C3E-4DA1-9DCC-4A7486988AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF03C98C-7C3E-4DA1-9DCC-4A7486988AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF03C98C-7C3E-4DA1-9DCC-4A7486988AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF03C98C-7C3E-4DA1-9DCC-4A7486988AC1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{015ED2B8-AD87-46D8-849E-BFABC9401982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{015ED2B8-AD87-46D8-849E-BFABC9401982}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{015ED2B8-AD87-46D8-849E-BFABC9401982}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{015ED2B8-AD87-46D8-849E-BFABC9401982}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A39599D7-3338-469D-9242-F0CD64B02716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A39599D7-3338-469D-9242-F0CD64B02716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A39599D7-3338-469D-9242-F0CD64B02716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A39599D7-3338-469D-9242-F0CD64B02716}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
