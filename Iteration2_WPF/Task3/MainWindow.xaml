@@ -1,0 +1,54 @@
+﻿<Window x:Class="Task3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task3"
+        mc:Ignorable="d"
+        Title="Регистрация на курс" Height="400" Width="350">
+    <StackPanel Margin="10" Height="Auto">
+        <Label Target="{Binding ElementName=User}" 
+               Content="_Имя студента:" 
+               FontWeight="Bold"/>
+        <TextBox Name="User" 
+                 Text="Павел Петрович Кошечкин"
+                 Margin="0,0,0,5"
+                 Padding="3"/>
+        
+        <Label Content="_Факультет:"
+               FontWeight="Bold"/>
+        <ComboBox Margin="0,0,0,5"
+                  Padding="3"
+                  IsEditable="False">
+            <TextBlock Text="Физика" Padding="3,0,0,0"/>
+            <TextBlock Text="Математика" Padding="3,0,0,0"/>
+            <TextBlock Text="Русский язык" Padding="3,0,0,0"/>
+            <TextBlock Text="Биология" Padding="3,0,0,0"/>
+        </ComboBox>
+        
+        <Label Content="Доступные _курсы:"
+               FontWeight="Bold"/>
+        <ListBox Margin="0,0,0,5"
+                 SelectionMode="Multiple">
+            <ListBoxItem>C#</ListBoxItem>
+            <ListBoxItem>Математический анализ</ListBoxItem>    
+            <ListBoxItem>C++</ListBoxItem>
+            <ListBoxItem>Деловой русский язык</ListBoxItem>    
+        </ListBox>
+        
+        <Label Content="Форма _обучения:"
+               FontWeight="Bold"/>
+        <RadioButton Content="Очно" Margin="3,0,0,0" IsChecked="True"/>
+        <RadioButton Content="Заочно" Margin="3,0,0,5"/>
+
+        <Label Content="Желаемое количесво часов обучения в неделю:"
+               FontWeight="Bold"/>
+        <Slider Minimum="3"
+                Maximum="12"
+                Value="6" TickFrequency="3"
+                />
+        <CheckBox Content="Я согласен на обработку персональых данных"/>
+        <Button Content="Записаться" />
+        
+    </StackPanel>
+</Window>
