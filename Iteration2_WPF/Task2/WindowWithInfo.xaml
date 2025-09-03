@@ -1,0 +1,38 @@
+﻿<Window x:Class="Task2.WindowWithInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task2"
+        mc:Ignorable="d"
+        Title="О программе" Height="400" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>            
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Text="Простой тесктовый редактор" 
+                   Margin ="15" 
+                   FontWeight="Bold" 
+                   FontSize="16"/>
+        <Image Grid.Row="1"
+               HorizontalAlignment="Center"
+               Margin="10"
+               Source="/Picture/Developer.jpg"/>
+        <StackPanel Grid.Row="2" Orientation="Vertical">
+           <TextBlock Text="Автор: Косков Валерий Олегович" HorizontalAlignment="Left" Margin="110,10,0,5" /> 
+           <TextBlock Text="Версия: 1.0" HorizontalAlignment="Left" Margin="110,5,0,5" /> 
+           <TextBlock Text="Дата создания: 10.08.2025" HorizontalAlignment="Left" Margin="110,5,0,10" /> 
+        </StackPanel>
+
+        <Button Grid.Row="3" 
+                Content="Закрыть" 
+                HorizontalAlignment="Center" 
+                Margin ="10" Padding="10,5,10,5"
+                BorderThickness="0" Click="Button_Click"/>
+    </Grid>
+</Window>

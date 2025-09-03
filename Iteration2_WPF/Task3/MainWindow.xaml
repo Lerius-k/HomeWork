@@ -1,0 +1,136 @@
+﻿<Window x:Class="Task3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task3"
+        mc:Ignorable="d"
+        Title="Регистрация на курс" Height="540" Width="350"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen">
+    <StackPanel Margin="10" Height="Auto">
+        <Label Target="{Binding ElementName=User}" 
+               Content="_Имя студента:" 
+               FontWeight="Bold"/>
+        <TextBox Name="User"
+                 Margin="0,0,0,5"
+                 Padding="3"/>
+
+        <Label Content="_Факультет:"
+               FontWeight="Bold"/>
+        <ComboBox Name="comboBox" 
+                  Margin="0,0,0,5"
+                  Padding="3"
+                  IsEditable="False"
+                  SelectedIndex="0" 
+                  SelectionChanged="comboBox_SelectionChanged"
+                  >
+            <TextBlock Text="Физика" Padding="3,0,0,0"/>
+            <TextBlock Text="Математика" Padding="3,0,0,0"/>
+            <TextBlock Text="Русский язык" Padding="3,0,0,0"/>
+            <TextBlock Text="Программирование" Padding="3,0,0,0"/>
+        </ComboBox>
+
+        <Label Content="Доступные _курсы:"
+               FontWeight="Bold"/>
+        <ListBox Name="physics" 
+                 Margin="0,0,0,5"
+                 SelectionMode="Multiple"
+                 Visibility="Visible"
+                 Height="100"
+                 SelectionChanged="Physics_SelectionChanged">
+            <ListBoxItem>Оптика</ListBoxItem>
+            <ListBoxItem>Квантовая теория</ListBoxItem>
+            <ListBoxItem>Общая теория относительности</ListBoxItem>
+            <ListBoxItem>Специальная теория относилтельности</ListBoxItem>
+        </ListBox>
+
+        <ListBox Name="mathematics"
+                 Margin="0,0,0,5"
+                 SelectionMode="Multiple"
+                 Visibility="Collapsed"
+                 Height="100"
+                 SelectionChanged="Mathematics_SelectionChanged">
+            <ListBoxItem>Алгебра</ListBoxItem>
+            <ListBoxItem>Математический анализ</ListBoxItem>
+            <ListBoxItem>Геометрия</ListBoxItem>
+        </ListBox>
+
+        <ListBox Name="russianLanguage"
+                 Margin="0,0,0,5"
+                 SelectionMode="Multiple"
+                 Visibility="Collapsed"
+                 Height="100"
+                 SelectionChanged="RussianLanguage_SelectionChanged">
+            <ListBoxItem>Общий курс русского языка</ListBoxItem>
+            <ListBoxItem>Деловой русский язык</ListBoxItem>
+        </ListBox>
+
+        <ListBox Name="programming"
+                 Margin="0,0,0,5"
+                 SelectionMode="Multiple"
+                 Visibility="Collapsed"
+                 Height="100"
+                 SelectionChanged="Programming_SelectionChanged">
+            <ListBoxItem>C#</ListBoxItem>
+            <ListBoxItem>C++</ListBoxItem>
+        </ListBox>
+
+        <Label Content="Форма _обучения:"
+               FontWeight="Bold"/>
+        <RadioButton Name="fulltimeEducation" Content="Очно" Margin="3,0,0,0" IsChecked="True"/>
+        <RadioButton Content="Заочно" Margin="3,0,0,5"/>
+
+        <Label Content="Желаемое количесво часов обучения в неделю:"
+               FontWeight="Bold"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Slider x:Name="hoursChange" Minimum="3"
+                    Maximum="12"
+                    Value="6" TickFrequency="3"
+                    IsSnapToTickEnabled ="True"
+                    TickPlacement="BottomRight" 
+                    ValueChanged="hoursChange_ValueChanged"
+                    />
+
+            <Grid Grid.Row ="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="3" HorizontalAlignment="Left" Margin="-2,0,0,0"/>
+                <Label Grid.Column="1" Content="6" HorizontalAlignment="Center" Margin="2,0,0,0"/>
+                <Label Grid.Column="2" Content="9" HorizontalAlignment="Center" Margin="-3,0,0,0"/>
+                <Label Grid.Column="3" Content="12" HorizontalAlignment="Right" Margin="0,0,-5,0"/>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Выбрано:" HorizontalAlignment="Left"/>
+                <Label Name="trainingHours" Grid.Column="1" Content="6" HorizontalAlignment="Left" FontWeight="Bold"/>
+                <Label Grid.Column="2" Content="ч. в неделю (для каждого курса)" HorizontalAlignment="Left"/>
+            </Grid>
+        </Grid>
+        <CheckBox Name="MailingCheckBox" 
+                  Content="Я согласен на обработку персональых данных"
+                  Margin="0,15,0,15"/>
+        <Button Name="SaveButton" 
+                Content="Записаться" 
+                Margin="0,0,0,5"
+                Padding="3"
+                Width="160" 
+                Background="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionBrushKey}}" Click="SaveButton_Click"
+                />
+
+    </StackPanel>
+</Window>
