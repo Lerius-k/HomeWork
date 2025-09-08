@@ -52,6 +52,5 @@
                   IsChecked="False"
                   Content="Не выбрано"
                   IsThreeState="True"/>
-
     </Grid>
 </Window>
