@@ -17,16 +17,16 @@
                                 <RowDefinition Height="Auto"/>                                
                             </Grid.RowDefinitions>
                             <Rectangle Height="20" Width="20" RadiusX="3" RadiusY="3" Stroke="DarkGray" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Ellipse  x:Name="Null" Height="10" Width="10" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            <ContentControl x:Name="Checked" Content="X" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            <Ellipse  x:Name="Null" Height="10" Width="10" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
+                            <ContentControl x:Name="Checked" Content="X" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
                             <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="Checked" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="Checked" Property="Opacity" Value="1"/>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="{x:Null}">
-                                <Setter TargetName="Null" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="Null" Property="Opacity" Value="1"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -42,13 +42,16 @@
         </Grid.ColumnDefinitions>
         <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center"
                   IsChecked="{x:Null}"
-                  Content="Не определено"/>
+                  Content="Не определено"
+                  IsThreeState="True"/>
         <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"
                   IsChecked="True"
-                  Content="Выбрано"/>
+                  Content="Выбрано"
+                  IsThreeState="True"/>
         <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2"
                   IsChecked="False"
-                  Content="Не выбрано"/>
+                  Content="Не выбрано"
+                  IsThreeState="True"/>
 
     </Grid>
 </Window>
