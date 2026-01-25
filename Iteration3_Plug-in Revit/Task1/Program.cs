@@ -4,7 +4,16 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+
+            ShoppingCartService cart = new ShoppingCartService();
+            var items = new Dictionary<decimal, int>
+                {
+                    { 100, 2 }, // 2 товара по 100
+                    { 300, 1 }, // 1 товар по 300
+                    { 250, 4 }, // 4 товара по 250
+                    { 200, 1 }  // 1 товар по 200
+                };
+            cart.CalculateTotalPriceWithQuantities("Premium", items);
             Console.ReadKey();
         }
     }
