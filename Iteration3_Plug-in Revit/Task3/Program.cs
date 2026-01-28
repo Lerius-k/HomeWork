@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Task3
+namespace Task2
 {   // не стал классы и интерфейсы в отдлеьный файлы программы выносить, чтобы было удобно и быстро настроить и проверить код.
     internal class Program
     {
