@@ -3,7 +3,9 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HelloRevit
@@ -98,6 +100,68 @@ namespace HelloRevit
     }
 
     [Transaction(TransactionMode.Manual)]
+    public class FamInstancesByCategory : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            //добираемся до документа 
+            UIApplication uiApp = commandData.Application;
+            Application app = uiApp.Application;
+            UIDocument uiDoc = uiApp.ActiveUIDocument;
+            Document doc = uiDoc.Document;
+
+            IList<Reference> pickedRefs = new List<Reference>();
+            //выбираем элементы с проверкой
+            try
+            {
+                TaskDialog.Show("Внимание", $"Внимание.\n\nДоступен выбор только загружаемых семейств.");
+                pickedRefs = uiDoc.Selection.PickObjects(ObjectType.Element, new OnlyFamilyInstance(), "Выберите элементы");
+            }
+            catch
+            {
+                TaskDialog.Show("Инфо", $"Элементы не выбраны");
+                return Result.Failed;
+            }
+
+            //обрабатываем полученные элементы 
+            try
+            {
+                //создаем пустой словарь
+                Dictionary<string, int> elems = new Dictionary<string, int>();
+                //циклом проверяем наличие по ключу(имя категории) в словаре
+                foreach (var pickedRef in pickedRefs)
+                {
+                    string kay = doc.GetElement(pickedRef).Category.Name; //берем имя категории
+                    bool hasKey = elems.ContainsKey(kay); //проверяем содержаение этого имени в словаре
+                    if (hasKey)
+                        elems[kay] += 1; // если такое имя есть, прибавляем 1
+                    else
+                        elems.Add(kay, 1); // если такого имени нет, добавляем пару в словарь со значением 1
+                }
+
+                string showDic = ""; //создаем строковый параметр для заполения парами ключ-занчение
+                
+                //циклом заполняем парами
+                foreach (KeyValuePair<string, int> pair in elems)
+                {
+                    showDic += $"\n{pair.Key} - {pair.Value}";
+                }
+
+                //выводим результат
+                TaskDialog.Show("Результат", $"Количество элементов всего: {pickedRefs.Count}\nРаспределение по категориям:{showDic}");
+
+                return Result.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                TaskDialog.Show("Ошибка", $"Произошла ошибка: {ex.ToString()}"); // помогает найти строку, вызвавшую исключение
+                return Result.Failed;
+            }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
     public class MyFirstApp : IExternalApplication
     {
         public Result OnStartup(UIControlledApplication application)
@@ -160,8 +224,17 @@ namespace HelloRevit
                 "C:\\Users\\koskovvo\\AppData\\Roaming\\Autodesk\\Revit\\Addins\\2019\\C#course\\HelloRevit.dll",
                 "HelloRevit.StatisticOfWall"
                 );
-            
+
+            //Команда StatisticOfWall  cобирает статистику по всем стенам в проекте
+            var button6 = new PushButtonData(
+                "FamInstancesByCategory",
+                "Cтатистика по\nкатегориям\nэкземпляров\nв выборке",
+                "C:\\Users\\koskovvo\\AppData\\Roaming\\Autodesk\\Revit\\Addins\\2019\\C#course\\HelloRevit.dll",
+                "HelloRevit.FamInstancesByCategory"
+                );
+
             panel3.AddItem(button5);
+            panel3.AddItem(button6);
 
             return Result.Cancelled;
         }
