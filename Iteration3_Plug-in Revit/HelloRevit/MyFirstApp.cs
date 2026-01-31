@@ -93,7 +93,7 @@ namespace HelloRevit
             catch (Exception ex)
             {
                 message = ex.Message;
-                TaskDialog.Show("Ошибка", $"Произошла ошибка: {ex.Message}");
+                TaskDialog.Show("Ошибка", $"Произошла ошибка: {ex.ToString()}");
                 return Result.Failed;
             }
         }
@@ -140,7 +140,7 @@ namespace HelloRevit
                 }
 
                 string showDic = ""; //создаем строковый параметр для заполения парами ключ-занчение
-                
+
                 //циклом заполняем парами
                 foreach (KeyValuePair<string, int> pair in elems)
                 {
@@ -158,6 +158,119 @@ namespace HelloRevit
                 TaskDialog.Show("Ошибка", $"Произошла ошибка: {ex.ToString()}"); // помогает найти строку, вызвавшую исключение
                 return Result.Failed;
             }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
+    public class DistanceBetweenWalls : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            //добираемся до документа 
+            UIApplication uiApp = commandData.Application;
+            Application app = uiApp.Application;
+            UIDocument uiDoc = uiApp.ActiveUIDocument;
+            Document doc = uiDoc.Document;
+
+            IList<Reference> pickedRefs = new List<Reference>();
+            //выбираем элементы с проверкой
+            bool twoWallFlag = false;
+            while (twoWallFlag == false)
+            {
+
+                try
+                {
+                    pickedRefs = uiDoc.Selection.PickObjects(ObjectType.Element, new OnlyWall(), "Выберите две стены");
+                    List<ElementId> elementIds = pickedRefs
+                            .Select(refObj => refObj.ElementId)
+                            .ToList();
+                    uiDoc.Selection.SetElementIds(elementIds); //выделяю выбранные стены, чтобы после работы скрипта они остались выделенными
+
+                    if (pickedRefs.Count != 2)
+                    {
+                        TaskDialog.Show("Ошибка исходных данных", $"Выборано стен: {pickedRefs.Count} \nНужно выбрать 2 стены.\n\nСделайте повторный выбор.");
+                    }
+                    else
+                    {
+                        twoWallFlag = true;
+                    }
+                }
+                catch
+                {
+                    TaskDialog.Show("Инфо", $"Элементы не выбраны");
+                    return Result.Failed;
+                }
+            }
+            try
+            {
+                // кладем каждую стену в отдльнй параметр            
+                Wall firstWall = doc.GetElement(pickedRefs[0]) as Wall;
+                Wall secondWall = doc.GetElement(pickedRefs[1]) as Wall;
+
+                //проверка на параллельность (номали к стене должны быть паралльеьны) - векторное произведение должно дать ноль.  
+                XYZ firstWallNormal = GetWallNormal(firstWall);
+                XYZ secondWallNormal = GetWallNormal(secondWall);
+                var result = firstWallNormal.CrossProduct(secondWallNormal);
+                double tolerance = 1e-10;
+                if (result.GetLength() >= tolerance)
+                    TaskDialog.Show("Информация", $"Стены не являются параллельными.\nОпределить расстояние меду ними невозможно.");
+                else
+                {
+                    // определение точек середины каждой стены            
+                    XYZ point1 = GetWallMidpoint(firstWall); // точка середины первой стены
+                    XYZ point2 = GetWallMidpoint(secondWall); // точка середины второй стены
+
+                    XYZ vectorBetween = point2 - point1; // вектор между серединами стен
+                                                         // вычисление расстояния между стенами
+                    double distanceBetweenWalls = Math.Abs(firstWallNormal.DotProduct(vectorBetween));
+                    // переводим расстояние в миллиметры
+                    double distanceMm = UnitUtils.ConvertFromInternalUnits(distanceBetweenWalls, DisplayUnitType.DUT_MILLIMETERS);
+
+                    // выводим информацию пользователю
+                    TaskDialog.Show("Результат", $"Точное расстояние между двумя стенами: {distanceMm:F2} мм\n\n*по осевой линии");
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                TaskDialog.Show("Ошибка", $"Произошла ошибка: {ex.ToString()}"); // помогает найти строку, вызвавшую исключение
+                return Result.Failed;
+            }
+
+            return Result.Succeeded;
+        }
+        public XYZ GetWallMidpoint(Wall wall)
+        {
+            LocationCurve location = wall.Location as LocationCurve; //берем положение стены
+            Curve wallCurve = location.Curve; //берем кривую положения стены
+
+            // Получаем начальную и конечную точки
+            XYZ startPoint = wallCurve.GetEndPoint(0);
+            XYZ endPoint = wallCurve.GetEndPoint(1);
+
+            // Вычисляем середину как среднее арифметическое координат
+            return (startPoint + endPoint) / 2;
+        }
+
+        public XYZ GetWallNormal(Wall wall)
+        {
+            LocationCurve location = wall.Location as LocationCurve;
+            Curve curve = location.Curve;
+
+            XYZ wallDirection = (curve.GetEndPoint(1) - curve.GetEndPoint(0))
+              .Normalize();
+            XYZ up = XYZ.BasisZ;
+
+            // Нормаль к стене (перпендикулярно направлению и вертикали)
+            return wallDirection.CrossProduct(up)
+              .Normalize();
+        }
+
+        public bool AreVectorsParallel(XYZ a, XYZ b, double tolerance = 1e-10)
+        {
+            XYZ cross = a.CrossProduct(b);
+            // Длина близка к нулю
+            return cross.GetLength() < tolerance;
         }
     }
 
@@ -233,8 +346,17 @@ namespace HelloRevit
                 "HelloRevit.FamInstancesByCategory"
                 );
 
+            // Команда DistanceBetweenWalls определяет рассточние между двумя стенами
+            var button7 = new PushButtonData(
+                "DistanceBetweenWalls",
+                "Расчет расстояния\nмежду стенами",
+                "C:\\Users\\koskovvo\\AppData\\Roaming\\Autodesk\\Revit\\Addins\\2019\\C#course\\HelloRevit.dll",
+                "HelloRevit.DistanceBetweenWalls"
+                );
+
             panel3.AddItem(button5);
             panel3.AddItem(button6);
+            panel3.AddItem(button7);
 
             return Result.Cancelled;
         }
