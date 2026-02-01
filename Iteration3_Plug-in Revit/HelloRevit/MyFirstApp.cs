@@ -7,6 +7,7 @@ using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace HelloRevit
 {
@@ -275,6 +276,88 @@ namespace HelloRevit
     }
 
     [Transaction(TransactionMode.Manual)]
+    public class ElementGeometryAnalysis : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            //добираемся до документа 
+            UIApplication uiApp = commandData.Application;
+            Application app = uiApp.Application;
+            UIDocument uiDoc = uiApp.ActiveUIDocument;
+            Document doc = uiDoc.Document;
+
+            Reference reference = null;
+            try
+            {
+                reference = uiDoc.Selection.PickObject(ObjectType.Element, new OnlySystemInstance(), "Выберите экземпляр системного семейства");
+            }
+            catch
+            {
+                TaskDialog.Show("Инфо", $"Элемент не выбран");
+                return Result.Failed;
+            }
+
+            try
+            {
+                var el = doc.GetElement(reference);
+
+                Options options = new Options();
+                var solids = el.get_Geometry(options)
+                    .Where(g => g is Solid)
+                    .OfType<Solid>()
+                    .Where(g => g.Volume > 0.0001)
+                    .ToList();
+
+                int solidsCount = 0; //количество солидов
+                double solidsVolume = 0; //объем солидов
+                double solidsArea = 0; //площадь солидов
+
+                int facesCount = 0; //количество граней
+                double facesArea = 0; //площадь граней
+
+                int edgesCount = 0; //количество ребер
+                double edgesLength = 0; //длина ребер
+
+                foreach (Solid solid in solids)
+                {
+                    solidsCount++; //количество солидов
+                    solidsVolume += solid.Volume; //объем солидов
+                    solidsArea += solid.SurfaceArea; //площадь солидов
+
+                    facesCount += solid.Faces.Size; //количество граней
+                    foreach (Face face in solid.Faces)
+                    {
+                        facesArea += face.Area; //площадь граней
+                    }
+                    edgesCount += solid.Edges.Size; //количество ребер
+                    foreach (Edge edge in solid.Edges)
+                    {
+                        Curve curve = edge.AsCurve();
+                        edgesLength += curve.Length; //длина ребер
+                    }
+                }
+
+                TaskDialog.Show("Результат анализа", $"Количество solid: {solidsCount};" +
+                    $"\nСуммарный объем solid: {UnitUtils.ConvertFromInternalUnits(solidsVolume, DisplayUnitType.DUT_CUBIC_METERS):F3} м3;" +
+                    $"\nСуммарная площадь solid: {UnitUtils.ConvertFromInternalUnits(solidsArea, DisplayUnitType.DUT_SQUARE_METERS):F2} м2;" +
+                    $"\nКоличество face: {facesCount};" +
+                    $"\nСуммарная площадь face: {UnitUtils.ConvertFromInternalUnits(facesArea, DisplayUnitType.DUT_SQUARE_METERS):F2} м2;" +
+                    $"\nКоличество edge: {edgesCount};" +
+                    $"\nСуммарная длина edge: {UnitUtils.ConvertFromInternalUnits(edgesLength, DisplayUnitType.DUT_METERS):F3} м.");
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                TaskDialog.Show("Ошибка", $"Произошла ошибка: {ex.ToString()}"); // помогает найти строку, вызвавшую исключение
+                return Result.Failed;
+            }
+
+            return Result.Succeeded;
+        }
+    }
+
+
+    [Transaction(TransactionMode.Manual)]
     public class MyFirstApp : IExternalApplication
     {
         public Result OnStartup(UIControlledApplication application)
@@ -354,9 +437,18 @@ namespace HelloRevit
                 "HelloRevit.DistanceBetweenWalls"
                 );
 
+            //Команда ElementGeometryAnalysis выводит отчет о составе геометрии экземпляра системного семейства
+            var button8 = new PushButtonData(
+                "ElementGeometryAnalysis",
+                "Анализ геометрии\nэкземпляра системного\nсемейства",
+                "C:\\Users\\koskovvo\\AppData\\Roaming\\Autodesk\\Revit\\Addins\\2019\\C#course\\HelloRevit.dll",
+                "HelloRevit.ElementGeometryAnalysis"
+                );
+
             panel3.AddItem(button5);
             panel3.AddItem(button6);
             panel3.AddItem(button7);
+            panel3.AddItem(button8);
 
             return Result.Cancelled;
         }
