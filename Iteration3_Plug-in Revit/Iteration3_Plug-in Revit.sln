@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2", "Task3\Task2.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloRevit", "HelloRevit\HelloRevit.csproj", "{1FAE196B-8E5C-4CD1-81B1-E2D56439385D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WallOpening", "WallOpening\WallOpening.csproj", "{07BDDD97-B514-402B-9D87-111982C2E6A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{1FAE196B-8E5C-4CD1-81B1-E2D56439385D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FAE196B-8E5C-4CD1-81B1-E2D56439385D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FAE196B-8E5C-4CD1-81B1-E2D56439385D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07BDDD97-B514-402B-9D87-111982C2E6A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07BDDD97-B514-402B-9D87-111982C2E6A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07BDDD97-B514-402B-9D87-111982C2E6A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07BDDD97-B514-402B-9D87-111982C2E6A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
