@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WallOpening", "WallOpening\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WallGeometryAnalysis", "WallGeometryAnalysis\WallGeometryAnalysis.csproj", "{9D2F8FE8-040C-4204-AFCA-22339CA3520B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateSection", "CreateSection\CreateSection.csproj", "{584438A4-6119-464F-A7EB-08097BAD1187}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{9D2F8FE8-040C-4204-AFCA-22339CA3520B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D2F8FE8-040C-4204-AFCA-22339CA3520B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D2F8FE8-040C-4204-AFCA-22339CA3520B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{584438A4-6119-464F-A7EB-08097BAD1187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{584438A4-6119-464F-A7EB-08097BAD1187}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{584438A4-6119-464F-A7EB-08097BAD1187}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{584438A4-6119-464F-A7EB-08097BAD1187}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
