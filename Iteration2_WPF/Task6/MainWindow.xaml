@@ -1,0 +1,33 @@
+﻿<Window x:Class="Task6.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task6"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="200" Width="300">
+    <Window.Resources>
+        <local:ConvertBoobToVisibility x:Key="ConvertBoobToVisibility"/>
+    </Window.Resources>
+    
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBox Margin="5"
+                     x:Name="TextBox"
+                     />
+            <CheckBox Margin="5"
+                      x:Name="CheckBox"
+                      Content="Показать детали"/>
+            <TextBlock Margin="5"
+                       x:Name="TextBlock"
+                       Text="{Binding StringFormat=Длина текста: {0}, ElementName=TextBox, Path=Text.Length}"
+                       Visibility="{Binding ElementName=CheckBox, Path=IsChecked, Converter={StaticResource ConvertBoobToVisibility}}"/>
+            <ProgressBar Margin="5"
+                         Height="10" 
+                         Value="{Binding ElementName=TextBox, Path=Text.Length, Mode=OneWay}"
+                         Visibility="{Binding ElementName=CheckBox, Path=IsChecked, Converter={StaticResource ConvertBoobToVisibility}}"/>
+
+        </StackPanel>
+
+    </Grid>
+</Window>
