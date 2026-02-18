@@ -1,0 +1,33 @@
+﻿<Window x:Class="Task9.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task9"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="400">
+    <Window.CommandBindings>
+        <CommandBinding Command="local:CustomCommands.ChangeColor" Executed="ChangeColorExecuted"/>
+        <CommandBinding Command="Undo" Executed="UndoExecuted" CanExecute="UndoCanExecute"/>
+    </Window.CommandBindings>
+    <Grid Name="Grid"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0,5*"/>
+            <RowDefinition Height="0,5*"/>
+        </Grid.RowDefinitions>
+        <Menu  >
+            <MenuItem Header="Действия" Padding="3" Margin="3,0,0,0" VerticalContentAlignment="Center">
+                <MenuItem Header="Изменить цвет" 
+                          Command="local:CustomCommands.ChangeColor"/>
+                <MenuItem Header="Отменить"  
+                          Command="Undo"/>
+            </MenuItem>
+        </Menu>
+        <Button Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Изменить цвет" Height="25" Width="100"
+                Command="local:CustomCommands.ChangeColor"/>
+        <Button Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Отменить" Height="25" Width="100"
+                Command="Undo"/>
+
+    </Grid>
+</Window>
