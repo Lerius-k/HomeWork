@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FloorFinishSelectionFilter.cs" />
     <Compile Include="MyFirstApp.cs" />
     <Compile Include="OnlyFamilyInstance.cs" />
     <Compile Include="OnlySystemInstance.cs" />
